@@ -15,6 +15,7 @@ Organized by metadata type. Every example uses correct imports and naming.
 8. [Application Menu and Modules](#application-menu)
 9. [Scripted REST APIs](#scripted-rest-apis)
 10. [UI Pages](#ui-pages)
+11. [Service Portal (SPWidget)](#service-portal)
 
 ---
 
@@ -539,3 +540,78 @@ UiPage({
 
 The front-end code lives in `src/client/` and is bundled automatically
 by the SDK's built-in Rollup bundler.
+
+---
+
+## 11. Service Portal (SPWidget)
+
+Service Portal uses **`SPWidget`** and **`Record`** (for `sp_portal`, `sp_page`,
+`sp_container`, `sp_row`, `sp_column`, `sp_instance`) — **not** `UiPage`.
+Widgets are AngularJS-based, not React.
+
+**Full reference:** See `references/service-portal-patterns.md`
+**Official API docs:** https://www.servicenow.com/docs/r/application-development/servicenow-sdk/fluent-service-portal-api.html
+**Official example:** https://github.com/ServiceNow/sdk-examples/tree/626cd89b9df8386d518361ae2647f46abd356360/service-portal-sample
+
+### Minimal Widget Example
+
+```typescript
+// my-widget.now.ts
+import { SPWidget } from '@servicenow/sdk/core'
+
+SPWidget({
+    $id: Now.ID['my-widget'],
+    name: 'My Widget',
+    id: 'my-widget',
+    clientScript: Now.include('my-widget.client.js'),
+    serverScript: Now.include('my-widget.server.js'),
+    htmlTemplate: Now.include('my-widget.html'),
+    customCss: Now.include('my-widget.scss'),
+    demoData: { data: { items: [] } },
+    hasPreview: true,
+    linkScript: `function link(scope, element, attrs, controller) {}`,
+    dependencies: [],
+    angularProviders: [],
+})
+```
+
+```javascript
+// my-widget.server.js — writes to `data`, runs on server
+(function () {
+    data.items = new global.GlideQuery('incident')
+        .where('active', true)
+        .limit(5)
+        .select('number', 'short_description')
+        .toArray(5);
+})();
+```
+
+```javascript
+// my-widget.client.js — AngularJS controller
+api.controller = function ($scope) {
+    var c = this;
+    $scope.items = c.data.items;
+};
+```
+
+```html
+<!-- my-widget.html — AngularJS template -->
+<div>
+  <ul><li ng-repeat="i in items">{{i.number}} — {{i.short_description}}</li></ul>
+</div>
+```
+
+### Portal Record
+```typescript
+import { Record } from '@servicenow/sdk/core'
+
+Record({
+    $id: Now.ID['my-portal'],
+    table: 'sp_portal',
+    data: {
+        title: 'My Portal',
+        url_suffix: 'myportal',
+        logo: Now.attach('../../../assets/logo.svg'),
+    },
+})
+```

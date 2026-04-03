@@ -430,6 +430,21 @@ Always derive `<vendor>` and `<app>` from the `scope` field in `now.config.json`
 | `Guest user errors` | Use subflow with `run_as: 'system'` for privileged operations |
 | `Transform conflicts` | Generated files in `src/fluent/generated/` — migrate to proper files if needed |
 | `Missing types` | Run `now-sdk dependencies --auth <alias>` to fetch type defs |
+| `Module has no exported member 'Button'` (react-components) | Import from subpath: `import { Button } from '@servicenow/react-components/Button'` — root index only exports `createComponent` and `useRecord` |
+| `"sort-fill" is not assignable to type IconName` | Use `sort-ascending-fill`; many intuitive icon names are invalid — grep `icons.d.ts` for valid names |
+| `"search-outline" / "warning-fill" / "paper-plane-fill"` invalid IconName | Replace: `search-outline`→`magnifying-glass-outline`, `warning-fill`→`fire-fill`, `paper-plane-fill`→`send-fill`, `refresh-outline`→`sync-outline`, `check-circle-fill`→`circle-check-fill` |
+| Tabs `onSelectedItemSet` does nothing | Use `e.detail.payload.value` (not `e.detail.value`) to read the selected tab id |
+| `SPWidget is not exported` | Update SDK: `npm install @servicenow/sdk@latest` |
+| Widget not rendering on page | Verify `sp_instance` has correct `widget` and `column` sys_id references |
+| Widget renders as stacked list instead of grid | CSS `display:grid` doesn't work in SP — use Bootstrap `row`/`col-md-*` classes in HTML template |
+| Widget SCSS styles silently not applying | Nested `&__modifier` BEM SCSS is unreliable in SP — use flat class selectors only (see official sample-widget.scss) |
+| Async widget fails silently | `async: true` on `sp_instance` swallows errors — use `async: false` until widget is confirmed working |
+| Shared CSS class missing in widget | Widget CSS is isolated per widget — redefine shared utility classes (e.g. `.cp-inner`) in each widget's own SCSS |
+| `data` empty in client script | Server script must write to `data.<field>` (not a local variable) |
+| `Now.include()` file not found | Path is relative to the `.now.ts` file, not the project root |
+| `Now.attach()` file not found | Path is relative to the `.now.ts` file, not the project root |
+| Portal returns 404 | Check `url_suffix` in `sp_portal` record matches the URL you are hitting |
+| Wrong portal type used | Use `SPWidget` + `sp_portal` for Service Portal (AngularJS). Use `UiPage` for React portals only. |
 
 ---
 
@@ -457,6 +472,12 @@ The examples are the authoritative source of correct Fluent syntax.
 | Table extending another | `https://raw.githubusercontent.com/ServiceNow/sdk-examples/main/table-sample/src/fluent/table-extends.now.ts` |
 | Business rule | `https://raw.githubusercontent.com/ServiceNow/sdk-examples/main/businessrule-sample/src/fluent/business-rule-1.now.ts` |
 | ACL | `https://raw.githubusercontent.com/ServiceNow/sdk-examples/main/acl-sample/src/fluent/index.now.ts` |
+| Service Portal — portal record | `https://raw.githubusercontent.com/ServiceNow/sdk-examples/626cd89b9df8386d518361ae2647f46abd356360/service-portal-sample/src/fluent/portal/sp_portal.now.ts` |
+| Service Portal — widget definition | `https://raw.githubusercontent.com/ServiceNow/sdk-examples/626cd89b9df8386d518361ae2647f46abd356360/service-portal-sample/src/fluent/widgets/sample-widget.now.ts` |
+| Service Portal — server script | `https://raw.githubusercontent.com/ServiceNow/sdk-examples/626cd89b9df8386d518361ae2647f46abd356360/service-portal-sample/src/fluent/widgets/sample-widget.server.js` |
+| Service Portal — client script | `https://raw.githubusercontent.com/ServiceNow/sdk-examples/626cd89b9df8386d518361ae2647f46abd356360/service-portal-sample/src/fluent/widgets/sample-widget.client.js` |
+| Service Portal — HTML template | `https://raw.githubusercontent.com/ServiceNow/sdk-examples/626cd89b9df8386d518361ae2647f46abd356360/service-portal-sample/src/fluent/widgets/sample-widget.html` |
+| Service Portal — page record | `https://raw.githubusercontent.com/ServiceNow/sdk-examples/626cd89b9df8386d518361ae2647f46abd356360/service-portal-sample/src/fluent/page/sp_page_8e66560affd4b210fd87ffffffffffe6.now.ts` |
 
 ### How to use these during debugging
 
@@ -473,11 +494,27 @@ The full examples index is at: `https://github.com/ServiceNow/sdk-examples`
 
 For deeper patterns beyond email parsing, read:
 - `references/fluent-patterns.md` — Full Table, Flow, BusinessRule, ScriptInclude,
-  ACL, Record, and RestApi patterns with examples
+  ACL, Record, RestApi, and Service Portal (SPWidget) patterns with examples
 - `references/flow-advanced.md` — Advanced flow patterns: subflows, parallel blocks,
   for-each loops, error handling, and approval flows
+- `references/service-portal-patterns.md` — **Complete Service Portal reference**:
+  SPWidget, sp_portal, sp_page, sp_container/row/column/instance, server/client scripts,
+  AngularJS templates, SCSS, build/deploy, and troubleshooting
+- `references/global-app-patterns.md` — Global-scope app patterns, UiPage (React portals),
+  REST API calls from React, naming rules for global scope
+- `references/workspace-portal-patterns.md` — **Workspace Portal reference**: UiPage + `@servicenow/react-components` (HDS), correct subpath imports, valid IconName values, Tabs event pattern, REST API service pattern, full file structure, and troubleshooting
+
+### Service Portal vs UI Page — IMPORTANT
+When the user asks to build a **Service Portal** (classic `sp_widget`, AngularJS,
+`/<portal>.do` URLs): use `SPWidget` + `Record` for `sp_portal`/`sp_page`.
+When the user asks for a **custom React portal** (modern, `UiPage`): use `UiPage`.
+These are completely different APIs. Default to **Service Portal / SPWidget** unless
+the user explicitly wants React.
+
 - ServiceNow SDK docs: https://www.servicenow.com/docs/r/application-development/servicenow-sdk/define-metadata-code-fluent-sdk.html
+- **Service Portal Fluent API docs:** https://www.servicenow.com/docs/r/application-development/servicenow-sdk/fluent-service-portal-api.html
 - Build & install docs: https://www.servicenow.com/docs/r/application-development/servicenow-sdk/build-deploy-application-now-sdk.html
 - SDK examples repo: https://github.com/ServiceNow/sdk-examples
+- **Service Portal example:** https://github.com/ServiceNow/sdk-examples/tree/626cd89b9df8386d518361ae2647f46abd356360/service-portal-sample
 - Fluent MCP server (for AI-assisted dev): https://github.com/modesty/fluent-mcp
 - SDK releases & changelog: https://github.com/ServiceNow/sdk/releases
