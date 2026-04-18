@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp /Users/aparajitayadav/.claude/skills/sndev/SKILL.md \"/Users/aparajitayadav/Desktop/Projects/Market_research_app/Tutorial instructions and skills/SKILL.md\")",
+      "Bash(cp /Users/aparajitayadav/.claude/skills/sndev/references/fluent-patterns.md \"/Users/aparajitayadav/Desktop/Projects/Market_research_app/Tutorial instructions and skills/fluent-patterns.md\")",
+      "Bash(cp /Users/aparajitayadav/.claude/skills/sndev/references/flow-advanced.md \"/Users/aparajitayadav/Desktop/Projects/Market_research_app/Tutorial instructions and skills/flow-advanced.md\")",
+      "Bash(cp /Users/aparajitayadav/.claude/skills/sndev/references/service-portal-patterns.md \"/Users/aparajitayadav/Desktop/Projects/Market_research_app/Tutorial instructions and skills/service-portal-patterns.md\")",
+      "Bash(cp /Users/aparajitayadav/.claude/skills/sndev/references/global-app-patterns.md \"/Users/aparajitayadav/Desktop/Projects/Market_research_app/Tutorial instructions and skills/global-app-patterns.md\")",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)"
+    ]
+  }
+}
