@@ -96,6 +96,44 @@ src/fluent/
 
 ---
 
+## YouTube Course Materials
+
+PDF resources for the YouTube tutorial series are organized in [`YoutubeCourseMaterial/`](./YoutubeCourseMaterial/):
+
+### Claude Code Full Course
+
+Step-by-step video companion PDFs covering the complete Claude Code + ServiceNow SDK workflow:
+
+| File | Description |
+|---|---|
+| [`Video-1-Setup-SDK-NodeJS-Claude-Code.pdf`](./YoutubeCourseMaterial/Claude%20Code%20Full%20Course%20Material/Video-1-Setup-SDK-NodeJS-Claude-Code.pdf) | Setting up the ServiceNow SDK with Node.js and Claude Code |
+| [`Video-2-Authentication-OAuth-Basic.pdf`](./YoutubeCourseMaterial/Claude%20Code%20Full%20Course%20Material/Video-2-Authentication-OAuth-Basic.pdf) | OAuth authentication basics |
+| [`Video-3-Create-Build-Deploy-New-App.pdf`](./YoutubeCourseMaterial/Claude%20Code%20Full%20Course%20Material/Video-3-Create-Build-Deploy-New-App.pdf) | Creating, building, and deploying a new app |
+| [`Video-4-Transform-Update-Existing-App.pdf`](./YoutubeCourseMaterial/Claude%20Code%20Full%20Course%20Material/Video-4-Transform-Update-Existing-App.pdf) | Transforming and updating an existing app |
+| [`Video-5-Building-Global-Scope-App.pdf`](./YoutubeCourseMaterial/Claude%20Code%20Full%20Course%20Material/Video-5-Building-Global-Scope-App.pdf) | Building a global scope application |
+
+### Course PRDs
+
+Product requirement documents used as demo inputs throughout the course:
+
+| File | Description |
+|---|---|
+| [`KrishiBoard-PRD-v1.0.pdf`](./YoutubeCourseMaterial/Course%20PRDs/KrishiBoard-PRD-v1.0.pdf) | KrishiBoard app PRD |
+| [`TruckOrder_PRD 2.pdf`](./YoutubeCourseMaterial/Course%20PRDs/TruckOrder_PRD%202.pdf) | Truck Order app PRD |
+
+### Everything You Need to Know Series
+
+A focused series covering the AI dev tools ecosystem:
+
+| File | Description |
+|---|---|
+| [`Part1-Setup.pdf`](./YoutubeCourseMaterial/Everything%20you%20need%20to%20know%20Series/Part1-Setup.pdf) | Environment and toolchain setup |
+| [`Part2-Claude-Code.pdf`](./YoutubeCourseMaterial/Everything%20you%20need%20to%20know%20Series/Part2-Claude-Code.pdf) | Deep dive into Claude Code |
+| [`Part3-Copilot.pdf`](./YoutubeCourseMaterial/Everything%20you%20need%20to%20know%20Series/Part3-Copilot.pdf) | GitHub Copilot overview |
+| [`Part3B-Copilot-Mobile.pdf`](./YoutubeCourseMaterial/Everything%20you%20need%20to%20know%20Series/Part3B-Copilot-Mobile.pdf) | Copilot on mobile |
+
+---
+
 ## Resources
 
 - [ServiceNow SDK Docs](https://www.servicenow.com/docs/r/application-development/servicenow-sdk/define-metadata-code-fluent-sdk.html)
